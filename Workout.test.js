@@ -1,13 +1,14 @@
-import Workout from '../Workout';
+import { Workout } from './Workout'; // Ensure correct import
 
-test('test', () => {
+test('should add an exercise to the workout', () => {
     const workout = new Workout();
     workout.addToWorkout("squads");
     expect(workout.exercises).toEqual(["squads"]);
 });
 
-test('test', () => {
+test('should remove an exercise from the workout', () => {
     const workout = new Workout();
-    workout.removeFromWorkout("squads");
+    workout.addToWorkout("squads");  // First, add the exercise
+    workout.removeFromWorkout("squads"); // Then remove it
     expect(workout.exercises).toEqual([]);
 });
