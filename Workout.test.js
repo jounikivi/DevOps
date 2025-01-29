@@ -1,4 +1,4 @@
-import { Workout } from "./workout";
+import Workout from '../Workout';
 
 test('test', () => {
     const workout = new Workout();
