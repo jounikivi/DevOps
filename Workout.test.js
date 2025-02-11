@@ -9,7 +9,7 @@ test("should add an exercise", () => {
 
 test("should remove an exercise", () => {
     const workout = new Workout();
-    workout.ddExercise("squats");
+    workout.addExercise("squats");
     workout.removeExercise("squats");
     expect(workout.getExercises()).toEqual([]);
 });
