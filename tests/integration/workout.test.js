@@ -1,19 +1,19 @@
-
 import { Workout } from "../../Workout.js";
 import knex from "knex";
 import config from "../../knexfile.js";
 
+// Luodaan tietokantayhteys testejä varten
 const db = knex(config.development);
 
-befforeAll(async () => {
+beforeAll(async () => {
   await db.migrate.latest(); // Varmistaa, että viimeisin migraatio on käytössä
 });
 
-befforeEach(async () => {
-  await db.seed.run(); // Tyhjennetään workouts-taulu ennen jokaista testiä
+beforeEach(async () => {
+  await db("workouts").del(); // Tyhjennetään workouts-taulu ennen jokaista testiä
 });
 
-afterAll(async () => {  
+afterAll(async () => {
   await db.destroy(); // Sulkee tietokantayhteyden testien jälkeen
 });
 
@@ -30,17 +30,16 @@ describe("Workout Integration Tests", () => {
     expect(exercises).toHaveLength(1);
     expect(exercises[0].exercise).toBe("squats");
   });
+
+  test("should remove an exercise from the database", async () => {
+    // ARRANGE: Lisätään harjoitus "squats" tietokantaan
+    await db("workouts").insert({ exercise: "squats" });
+
+    // ACT: Poistetaan "squats" tietokannasta
+    await db("workouts").where({ exercise: "squats" }).del();
+
+    // ASSERT: Varmistetaan, että tietokanta on tyhjä
+    const exercises = await db("workouts").select("*");
+    expect(exercises).toHaveLength(0);
+  });
 });
-
-test("should remove an exercise from the database", async () => {
-  // ARRANGE: Lisätään harjoitus "squats" tietokantaan
-  await db("workouts").insert({ exercise: "squats" });
-
-  // ACT: Poistetaan "squats" tietokannasta
-  await db("workouts").where({ exercise: "squats" }).del();
-
-  // ASSERT: Varmistetaan, että tietokanta on tyhjä
-  const exercises = await db("workouts").select("*");
-  expect(exercises).toHaveLength(0);
-});
-
