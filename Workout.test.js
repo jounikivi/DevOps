@@ -1,47 +1,47 @@
 // Workout.test.js
 import { Workout } from "./Workout.js";
 
-// Utility function to retrieve a workout ID based on username
+// Apufunktio hakee harjoitus-ID:n käyttäjänimen perusteella
 function getWorkoutId(username) {
-    // Simulated function: In real cases, this would query a database
+    // Simuloitu toiminta: oikeassa tapauksessa tämä hakisi tiedot tietokannasta
     return username.length >= 4 ? 1 : null;
 }
 
-describe("Workout class", () => {
-    describe("Exercise management", () => {
-        test("should add an exercise", () => {
-            // ARRANGE: Create a new Workout instance
+describe("Workout-luokka", () => {
+    describe("Harjoitusten hallinta", () => {
+        test("lisää harjoituksen", () => {
+            // ARRANGE: Luodaan uusi Workout-olio
             const workout = new Workout();
             
-            // ACT: Add an exercise
-            workout.addExercise("squats");
+            // ACT: Lisätään harjoitus
+            workout.addExercise("kyykyt");
             
-            // ASSERT: Check that the exercise was added
-            expect(workout.getExercises()).toEqual(["squats"]);
+            // ASSERT: Tarkistetaan, että harjoitus lisättiin oikein
+            expect(workout.getExercises()).toEqual(["kyykyt"]);
         });
 
-        test("should remove an exercise", () => {
-            // ARRANGE: Create a new Workout instance and add an exercise
+        test("poistaa harjoituksen", () => {
+            // ARRANGE: Luodaan uusi Workout-olio ja lisätään harjoitus
             const workout = new Workout();
-            workout.addExercise("squats");
+            workout.addExercise("kyykyt");
             
-            // ACT: Remove the exercise
-            workout.removeExercise("squats");
+            // ACT: Poistetaan harjoitus
+            workout.removeExercise("kyykyt");
             
-            // ASSERT: Ensure the list is empty
+            // ASSERT: Varmistetaan, että lista on tyhjä
             expect(workout.getExercises()).toEqual([]);
         });
 
-        test("should not remove an exercise that does not exist", () => {
-            // ARRANGE: Create a new Workout instance and add one exercise
+        test("ei poista harjoitusta, jota ei ole lisätty", () => {
+            // ARRANGE: Luodaan uusi Workout-olio ja lisätään yksi harjoitus
             const workout = new Workout();
-            workout.addExercise("squats");
+            workout.addExercise("kyykyt");
             
-            // ACT: Try to remove an exercise that was never added
-            workout.removeExercise("pushups");
+            // ACT: Yritetään poistaa harjoitus, jota ei ole lisätty
+            workout.removeExercise("punnerrukset");
             
-            // ASSERT: The original exercise list should remain unchanged
-            expect(workout.getExercises()).toEqual(["squats"]);
+            // ASSERT: Alkuperäisen harjoituslistan tulisi pysyä muuttumattomana
+            expect(workout.getExercises()).toEqual(["kyykyt"]);
         });
     });
 });
