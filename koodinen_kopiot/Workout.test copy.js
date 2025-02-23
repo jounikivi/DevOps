@@ -1,10 +1,8 @@
 // Workout.test.js
-import { Workout } from "./Workout.js";
+import { Workout } from "../Workout.js";
 
-// Tehtävä 1b-1d: Testien organisointi ja apufunktion lisäys
 describe("Workout-luokka", () => {
-    // Tehtävä 1b: Ryhmitellään testit describe-lohkojen avulla
-describe("Harjoitusten hallinta", () => {
+    describe("Harjoitusten hallinta", () => {
         test("lisää harjoituksen", () => {
             // ARRANGE: Luodaan uusi Workout-olio
             const workout = new Workout();
@@ -13,7 +11,6 @@ describe("Harjoitusten hallinta", () => {
             workout.addExercise("kyykyt");
             
             // ASSERT: Tarkistetaan, että harjoitus lisättiin oikein
-            expect.assertions(1);
             expect(workout.getExercises()).toEqual(["kyykyt"]);
         });
 
@@ -26,7 +23,6 @@ describe("Harjoitusten hallinta", () => {
             workout.removeExercise("kyykyt");
             
             // ASSERT: Varmistetaan, että lista on tyhjä
-            expect.assertions(1);
             expect(workout.getExercises()).toEqual([]);
         });
 
@@ -39,19 +35,16 @@ describe("Harjoitusten hallinta", () => {
             workout.removeExercise("punnerrukset");
             
             // ASSERT: Alkuperäisen harjoituslistan tulisi pysyä muuttumattomana
-            expect.assertions(1);
             expect(workout.getExercises()).toEqual(["kyykyt"]);
         });
     });
 
-    // Tehtävä 3b-3c: createWorkout-funktion testaus ja validointi
-describe("createWorkout-funktion testaus", () => {
+    describe("createWorkout-funktion testaus", () => {
         test("heittää virheen, jos käyttäjänimi puuttuu", () => {
             // ARRANGE: Luodaan uusi Workout-olio
             const workout = new Workout();
             
             // ACT & ASSERT: Tarkistetaan, että virhe heitetään
-            expect.assertions(1);
             expect(() => workout.createWorkout(""))
                 .toThrow("Käyttäjänimen tulee olla vähintään 4 merkkiä pitkä");
         });
@@ -61,7 +54,6 @@ describe("createWorkout-funktion testaus", () => {
             const workout = new Workout();
             
             // ACT & ASSERT: Tarkistetaan, että virhe heitetään
-            expect.assertions(1);
             expect(() => workout.createWorkout("abc"))
                 .toThrow("Käyttäjänimen tulee olla vähintään 4 merkkiä pitkä");
         });
@@ -74,7 +66,6 @@ describe("createWorkout-funktion testaus", () => {
             const result = workout.createWorkout("testikäyttäjä");
             
             // ASSERT: Tarkistetaan, että harjoitus luotiin oikein
-            expect.assertions(1);
             expect(result).toEqual({ id: 1, username: "testikäyttäjä", exercises: [] });
         });
     });
