@@ -1,12 +1,6 @@
 // Workout.test.js
 import { Workout } from "./Workout.js";
 
-// Apufunktio hakee harjoitus-ID:n käyttäjänimen perusteella
-function getWorkoutId(username) {
-    // Simuloitu toiminta: oikeassa tapauksessa tämä hakisi tiedot tietokannasta
-    return username.length >= 4 ? 1 : null;
-}
-
 describe("Workout-luokka", () => {
     describe("Harjoitusten hallinta", () => {
         test("lisää harjoituksen", () => {
@@ -42,6 +36,37 @@ describe("Workout-luokka", () => {
             
             // ASSERT: Alkuperäisen harjoituslistan tulisi pysyä muuttumattomana
             expect(workout.getExercises()).toEqual(["kyykyt"]);
+        });
+    });
+
+    describe("createWorkout-funktion testaus", () => {
+        test("heittää virheen, jos käyttäjänimi puuttuu", () => {
+            // ARRANGE: Luodaan uusi Workout-olio
+            const workout = new Workout();
+            
+            // ACT & ASSERT: Tarkistetaan, että virhe heitetään
+            expect(() => workout.createWorkout(""))
+                .toThrow("Käyttäjänimen tulee olla vähintään 4 merkkiä pitkä");
+        });
+
+        test("heittää virheen, jos käyttäjänimi on liian lyhyt", () => {
+            // ARRANGE: Luodaan uusi Workout-olio
+            const workout = new Workout();
+            
+            // ACT & ASSERT: Tarkistetaan, että virhe heitetään
+            expect(() => workout.createWorkout("abc"))
+                .toThrow("Käyttäjänimen tulee olla vähintään 4 merkkiä pitkä");
+        });
+
+        test("luo harjoituksen onnistuneesti kelvollisella käyttäjänimellä", () => {
+            // ARRANGE: Luodaan uusi Workout-olio
+            const workout = new Workout();
+            
+            // ACT: Luodaan harjoitus
+            const result = workout.createWorkout("testikäyttäjä");
+            
+            // ASSERT: Tarkistetaan, että harjoitus luotiin oikein
+            expect(result).toEqual({ id: 1, username: "testikäyttäjä", exercises: [] });
         });
     });
 });

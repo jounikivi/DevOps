@@ -1,21 +1,27 @@
 // Workout.js
 export class Workout {
-  constructor() {
-      this.exercises = [];
-  }
+    constructor() {
+        this.exercises = [];
+    }
 
-  addExercise(exercise) {
-      this.exercises.push(exercise);
-  }
+    createWorkout(username) {
+        // 🔹 VALIDOINNIN LISÄYS TÄHÄN KOHTAAN
+        if (!username || username.length < 4) {
+            throw new Error("Käyttäjänimen tulee olla vähintään 4 merkkiä pitkä");
+        }
+        
+        return { id: 1, username: username, exercises: [] };
+    }
 
-  removeExercise(exercise) {
-      const index = this.exercises.indexOf(exercise);
-      if (index > -1) {
-          this.exercises.splice(index, 1);
-      }
-  }
+    addExercise(exercise) {
+        this.exercises.push(exercise);
+    }
 
-  getExercises() {
-      return this.exercises;
-  }
+    removeExercise(exercise) {
+        this.exercises = this.exercises.filter(e => e !== exercise);
+    }
+
+    getExercises() {
+        return this.exercises;
+    }
 }
